@@ -12,7 +12,8 @@ class ArticleView(View):
         return render(request, 'article/index.html', {'articles_list': article})
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(View):
     """Страница статьи"""
-    model = Article
-    slug_field = "url"
+    def get(self, request, slug):
+        article = Article.objects.get(url=slug)
+        return render(request, 'article/article_page.html', {'article': article})
